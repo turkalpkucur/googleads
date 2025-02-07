@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "google_ads_api.ui", "google_ads_api.ui.csproj", "{9FDD25E7-9161-4CB7-A1B1-D7B0B226153F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "google_ads_api.services", "..\google_ads_api.services\google_ads_api.services.csproj", "{1310B0AF-9EE8-42F2-8EBE-81EB54B2794A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FDD25E7-9161-4CB7-A1B1-D7B0B226153F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FDD25E7-9161-4CB7-A1B1-D7B0B226153F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FDD25E7-9161-4CB7-A1B1-D7B0B226153F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FDD25E7-9161-4CB7-A1B1-D7B0B226153F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1310B0AF-9EE8-42F2-8EBE-81EB54B2794A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1310B0AF-9EE8-42F2-8EBE-81EB54B2794A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1310B0AF-9EE8-42F2-8EBE-81EB54B2794A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1310B0AF-9EE8-42F2-8EBE-81EB54B2794A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
