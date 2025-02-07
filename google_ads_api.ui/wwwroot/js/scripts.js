@@ -5,19 +5,32 @@ function GetAuth() {
         type: "get",
         url: "/googleads/GoogleAuth",
         success: function (res) {
-      
             try {
-
                 window.open(
                     res,
-                    '_blank' // <- This is what makes it open in a new window.
+                    '_blank'  
                 );
-      
             } catch {
                 console.log("error-->" + res);
             }
-       
         },
-      
     });
 }
+
+
+
+function GetCustomerListButtonOnClick() {
+ 
+    let refreshToken = document.getElementById('ReturnRefreshTokenId').innerHTML;
+ 
+    $.ajax({
+        type: "POST",
+        data: { refreshToken: refreshToken },
+        url: "/googleads/ListAvaiableCustomers",
+        success: function () {
+            debugger;
+        },
+    });
+}
+  
+ 

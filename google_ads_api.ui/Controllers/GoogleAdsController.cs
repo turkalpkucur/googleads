@@ -7,7 +7,7 @@ namespace google_ads_api.ui.Controllers
     public class GoogleAdsController : Controller
     {
         private readonly IGoogleAdsService _googleAdsService;
-        public GoogleAdsController(IGoogleAdsService googleAdsService )
+        public GoogleAdsController(IGoogleAdsService googleAdsService)
         {
             _googleAdsService = googleAdsService;
         }
@@ -31,9 +31,17 @@ namespace google_ads_api.ui.Controllers
             //get token method
             services.Models.GoogleTokenDto token = await _googleAdsService.GetTokens(code);
             //return Ok(token);
-            return View("Index",token);
+            return View("Index", token);
         }
 
-   
+
+        [HttpPost]
+        public async Task<IActionResult> ListAvaiableCustomers(string refreshToken)
+        {
+            int result = await _googleAdsService.GetCustomers(refreshToken);
+            return Json(result);
+        }
+
+
     }
 }
