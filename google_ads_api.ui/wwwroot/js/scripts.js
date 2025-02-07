@@ -6,9 +6,13 @@ function GetAuth() {
         url: "/googleads/GoogleAuth",
         success: function (res) {
       
-         
             try {
-                window.location.href = res;
+
+                window.open(
+                    res,
+                    '_blank' // <- This is what makes it open in a new window.
+                );
+      
             } catch {
                 console.log("error-->" + res);
             }

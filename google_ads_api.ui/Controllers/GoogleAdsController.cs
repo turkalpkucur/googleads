@@ -11,9 +11,9 @@ namespace google_ads_api.ui.Controllers
         {
             _googleAdsService = googleAdsService;
         }
-        public IActionResult Index()
+        public IActionResult Index(services.Models.GoogleTokenDto obj)
         {
-            return View();
+            return View(obj);
         }
 
         [HttpGet]
@@ -29,8 +29,9 @@ namespace google_ads_api.ui.Controllers
             string scope = HttpContext.Request.Query["scope"];
 
             //get token method
-            var token = await _googleAdsService.GetTokens(code);
-            return Ok(token);
+            services.Models.GoogleTokenDto token = await _googleAdsService.GetTokens(code);
+            //return Ok(token);
+            return View("Index",token);
         }
 
    

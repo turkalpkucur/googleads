@@ -1,12 +1,18 @@
-﻿
- 
+﻿@using google_ads_api.services.Models
+@model GoogleTokenDto
 
 <button onclick="GetAuth()">
 
     GET AUTH!
 
+
 </button>
 
+@{
+    if (Model.refresh_token != null)
+    {
+        <div> @Model.refresh_token</div>
+    }
+}
 
 
- 
