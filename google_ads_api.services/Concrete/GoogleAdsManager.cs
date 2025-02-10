@@ -79,10 +79,10 @@ namespace google_ads_api.services.Concrete
                 };
                 GoogleAdsClient client = new GoogleAdsClient(config);
 
-
             }
             catch
             {
+
 
             }
         }
