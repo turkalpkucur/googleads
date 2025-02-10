@@ -1,4 +1,9 @@
-﻿using google_ads_api.services.Abstract;
+﻿using Google.Ads.GoogleAds;
+using Google.Ads.GoogleAds.Config;
+using Google.Ads.GoogleAds.Lib;
+using Google.Ads.GoogleAds.V18.Errors;
+using Google.Ads.GoogleAds.V18.Services;
+using google_ads_api.services.Abstract;
 using google_ads_api.services.Models;
 using System;
 using System.Net.Http;
@@ -61,50 +66,64 @@ namespace google_ads_api.services.Concrete
 
         public async Task<int> GetCustomers(string refreshToken)
         {
-            //try
-            //{
+            try
+            {
+                GoogleAdsConfig config = new GoogleAdsConfig()
+                {
+                    DeveloperToken = "******",
+                    OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+                    OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
+                    OAuth2ClientSecret = "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",
+                    OAuth2RefreshToken = refreshToken,
+                    LoginCustomerId = "627-912-0547"
+                };
+                GoogleAdsClient client = new GoogleAdsClient(config);
 
-            //    AdManagerUser user = new AdManagerUser();
-            //    using (CompanyService companyService = user.GetService<CompanyService>())
-            //    {
 
-            //        int pageSize = StatementBuilder.SUGGESTED_PAGE_LIMIT;
-            //        StatementBuilder statementBuilder =
-            //            new StatementBuilder().OrderBy("id ASC").Limit(pageSize);
+            }
+            catch
+            {
 
-            //        // Retrieve a small amount of companies at a time, paging through until all
-            //        // companies have been retrieved.
-            //        int totalResultSetSize = 0;
-            //        do
-            //        {
-            //            CompanyPage page =
-            //                companyService.getCompaniesByStatement(statementBuilder.ToStatement());
+            }
+        }
 
-            //            // Print out some information for each company.
-            //            if (page.results != null)
-            //            {
-            //                totalResultSetSize = page.totalResultSetSize;
-            //                int i = page.startIndex;
-            //                foreach (Company company in page.results)
-            //                {
-            //                    Console.WriteLine(
-            //                        "{0}) Company with ID {1}, name \"{2}\", and type \"{3}\" was " +
-            //                        "found.",
-            //                        i++, company.id, company.name, company.type);
-            //                }
-            //            }
 
-            //            statementBuilder.IncreaseOffsetBy(pageSize);
-            //        } while (statementBuilder.GetOffset() < totalResultSetSize);
-            //        return totalResultSetSize;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+        public void Run(GoogleAdsClient client, long customerId)
+        {
+            // Get the GoogleAdsService.
+            GoogleAdsServiceClient googleAdsService = client.GetService(
+                Services.V18.GoogleAdsService);
 
-            //    throw;
-            //}
-            return 0;
+            // Create a query that will retrieve all campaigns.
+            string query = @"SELECT
+                    campaign.id,
+                    campaign.name,
+                    campaign.network_settings.target_content_network
+                FROM campaign
+                ORDER BY campaign.id";
+
+            try
+            {
+                // Issue a search request.
+                googleAdsService.SearchStream(customerId.ToString(), query,
+                    delegate (SearchGoogleAdsStreamResponse resp)
+                    {
+                        foreach (GoogleAdsRow googleAdsRow in resp.Results)
+                        {
+                            Console.WriteLine("Campaign with ID {0} and name '{1}' was found.",
+                                googleAdsRow.Campaign.Id, googleAdsRow.Campaign.Name);
+                        }
+                    }
+                );
+            }
+            catch (GoogleAdsException e)
+            {
+                Console.WriteLine("Failure:");
+                Console.WriteLine($"Message: {e.Message}");
+                Console.WriteLine($"Failure: {e.Failure}");
+                Console.WriteLine($"Request ID: {e.RequestId}");
+                throw;
+            }
         }
     }
 }
