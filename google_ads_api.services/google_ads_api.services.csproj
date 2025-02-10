@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Ads.Common" Version="9.5.3" />
     <PackageReference Include="Google.Apis" Version="1.69.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
-    <PackageReference Include="Google.Dfp" Version="24.29.0" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using Google.Api.Ads.AdManager.Lib;
-using google_ads_api.services.Models;
+﻿using google_ads_api.services.Models;
 using System.Threading.Tasks;
 
 namespace google_ads_api.services.Abstract

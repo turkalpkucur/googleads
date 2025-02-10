@@ -1,8 +1,4 @@
-﻿using Google.Api.Ads.AdManager.Lib;
-using Google.Api.Ads.AdManager.Util.v202411;
-using Google.Api.Ads.AdManager.v202411;
-using Google.Api.Ads.Common.Lib;
-using google_ads_api.services.Abstract;
+﻿using google_ads_api.services.Abstract;
 using google_ads_api.services.Models;
 using System;
 using System.Net.Http;
@@ -65,49 +61,50 @@ namespace google_ads_api.services.Concrete
 
         public async Task<int> GetCustomers(string refreshToken)
         {
-            try
-            {
+            //try
+            //{
 
-         
-                using (CompanyService companyService = new CompanyService())
-                {
+            //    AdManagerUser user = new AdManagerUser();
+            //    using (CompanyService companyService = user.GetService<CompanyService>())
+            //    {
 
-                    int pageSize = StatementBuilder.SUGGESTED_PAGE_LIMIT;
-                    StatementBuilder statementBuilder =
-                        new StatementBuilder().OrderBy("id ASC").Limit(pageSize);
-                    
-                    // Retrieve a small amount of companies at a time, paging through until all
-                    // companies have been retrieved.
-                    int totalResultSetSize = 0;
-                    do
-                    {
-                        CompanyPage page =
-                            companyService.getCompaniesByStatement(statementBuilder.ToStatement());
+            //        int pageSize = StatementBuilder.SUGGESTED_PAGE_LIMIT;
+            //        StatementBuilder statementBuilder =
+            //            new StatementBuilder().OrderBy("id ASC").Limit(pageSize);
 
-                        // Print out some information for each company.
-                        if (page.results != null)
-                        {
-                            totalResultSetSize = page.totalResultSetSize;
-                            int i = page.startIndex;
-                            foreach (Company company in page.results)
-                            {
-                                Console.WriteLine(
-                                    "{0}) Company with ID {1}, name \"{2}\", and type \"{3}\" was " +
-                                    "found.",
-                                    i++, company.id, company.name, company.type);
-                            }
-                        }
+            //        // Retrieve a small amount of companies at a time, paging through until all
+            //        // companies have been retrieved.
+            //        int totalResultSetSize = 0;
+            //        do
+            //        {
+            //            CompanyPage page =
+            //                companyService.getCompaniesByStatement(statementBuilder.ToStatement());
 
-                        statementBuilder.IncreaseOffsetBy(pageSize);
-                    } while (statementBuilder.GetOffset() < totalResultSetSize);
-                    return totalResultSetSize;
-                }
-            }
-            catch (Exception ex)
-            {
+            //            // Print out some information for each company.
+            //            if (page.results != null)
+            //            {
+            //                totalResultSetSize = page.totalResultSetSize;
+            //                int i = page.startIndex;
+            //                foreach (Company company in page.results)
+            //                {
+            //                    Console.WriteLine(
+            //                        "{0}) Company with ID {1}, name \"{2}\", and type \"{3}\" was " +
+            //                        "found.",
+            //                        i++, company.id, company.name, company.type);
+            //                }
+            //            }
 
-                throw;
-            }
+            //            statementBuilder.IncreaseOffsetBy(pageSize);
+            //        } while (statementBuilder.GetOffset() < totalResultSetSize);
+            //        return totalResultSetSize;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+            return 0;
         }
     }
 }
