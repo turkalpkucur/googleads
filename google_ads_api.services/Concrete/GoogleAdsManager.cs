@@ -1,6 +1,7 @@
 ﻿using Google.Ads.GoogleAds;
 using Google.Ads.GoogleAds.Config;
 using Google.Ads.GoogleAds.Lib;
+using Google.Ads.GoogleAds.V17.Services;
 using Google.Ads.GoogleAds.V18.Errors;
 using Google.Ads.GoogleAds.V18.Services;
 using google_ads_api.services.Abstract;
@@ -28,7 +29,7 @@ namespace google_ads_api.services.Concrete
                 string prompt = "consent";
                 string response_type = "code";
                 string clientID = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com";
-                string scope = "https://www.googleapis.com/auth/calendar";
+                string scope = "https://www.googleapis.com/auth/adwords";
                 string access_type = "offline";
                 string redirect_uri_encode = Methods.Methods.urlEncodeForGoogle(redirectURL);
                 var mainURL = string.Format(scopeURL1, redirect_uri_encode, prompt, response_type, clientID, scope, access_type);
@@ -64,23 +65,29 @@ namespace google_ads_api.services.Concrete
         }
 
 
-        public async Task<int> GetCustomers(string refreshToken)
+        public async Task  GetCustomers(string refreshToken)
         {
             try
             {
                 GoogleAdsConfig config = new GoogleAdsConfig()
                 {
-                    DeveloperToken = "******",
+                    DeveloperToken = "yQJX5fsBmfb_2fAYttQ5HA",
                     OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
                     OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
                     OAuth2ClientSecret = "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",
                     OAuth2RefreshToken = refreshToken,
-                    LoginCustomerId = "627-912-0547"
+                    LoginCustomerId = "4698070815"
                 };
                 GoogleAdsClient client = new GoogleAdsClient(config);
+  
+ 
+                Run(client, Convert.ToInt64("4698070815"));
+                
+
+
 
             }
-            catch
+            catch(Exception ex)
             {
 
 
@@ -91,7 +98,7 @@ namespace google_ads_api.services.Concrete
         public void Run(GoogleAdsClient client, long customerId)
         {
             // Get the GoogleAdsService.
-            GoogleAdsServiceClient googleAdsService = client.GetService(
+            Google.Ads.GoogleAds.V18.Services.GoogleAdsServiceClient googleAdsService = client.GetService(
                 Services.V18.GoogleAdsService);
 
             // Create a query that will retrieve all campaigns.
@@ -106,9 +113,9 @@ namespace google_ads_api.services.Concrete
             {
                 // Issue a search request.
                 googleAdsService.SearchStream(customerId.ToString(), query,
-                    delegate (SearchGoogleAdsStreamResponse resp)
+                    delegate (Google.Ads.GoogleAds.V18.Services.SearchGoogleAdsStreamResponse resp)
                     {
-                        foreach (GoogleAdsRow googleAdsRow in resp.Results)
+                        foreach (Google.Ads.GoogleAds.V18.Services.GoogleAdsRow googleAdsRow in resp.Results)
                         {
                             Console.WriteLine("Campaign with ID {0} and name '{1}' was found.",
                                 googleAdsRow.Campaign.Id, googleAdsRow.Campaign.Name);
@@ -125,5 +132,7 @@ namespace google_ads_api.services.Concrete
                 throw;
             }
         }
+
+
     }
 }

@@ -38,8 +38,8 @@ namespace google_ads_api.ui.Controllers
         [HttpPost]
         public async Task<IActionResult> ListAvaiableCustomers(string refreshToken)
         {
-            int result = await _googleAdsService.GetCustomers(refreshToken);
-            return Json(result);
+            await _googleAdsService.GetCustomers(refreshToken);
+            return Ok();
         }
 
 

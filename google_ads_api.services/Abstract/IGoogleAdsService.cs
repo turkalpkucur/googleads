@@ -7,7 +7,7 @@ namespace google_ads_api.services.Abstract
     {
         public string GetAuthCode();
         public Task<GoogleTokenDto> GetTokens(string code);
-        public Task<int> GetCustomers(string refreshToken);
+        public Task GetCustomers(string refreshToken);
     }
 
 }
