@@ -27,7 +27,7 @@ function GetCustomerListButtonOnClick() {
         type: "POST",
         data: { refreshToken: refreshToken },
         url: "/googleads/ListAvaiableCustomers",
-        success: function () {
+        success: function (res) {
             debugger;
         },
     });

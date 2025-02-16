@@ -7,7 +7,7 @@ namespace google_ads_api.services.Abstract
     {
         public string GetAuthCode();
         public Task<GoogleTokenDto> GetTokens(string code);
-        public Task GetCustomers(string refreshToken);
+        public Task<Google.Ads.GoogleAds.V18.Services.GoogleAdsRow> GetCustomers(string refreshToken);
     }
 
 }

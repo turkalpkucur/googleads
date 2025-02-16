@@ -65,7 +65,7 @@ namespace google_ads_api.services.Concrete
         }
 
 
-        public async Task  GetCustomers(string refreshToken)
+        public async Task<Google.Ads.GoogleAds.V18.Services.GoogleAdsRow> GetCustomers(string refreshToken)
         {
             try
             {
@@ -73,31 +73,28 @@ namespace google_ads_api.services.Concrete
                 {
                     DeveloperToken = "yQJX5fsBmfb_2fAYttQ5HA",
                     OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.SERVICE_ACCOUNT,
-                    //OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
-                    //OAuth2ClientSecret = "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",
-                    OAuth2SecretsJsonPath= "/client_secret_124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com.json",
-                    //OAuth2RefreshToken = refreshToken,
+                    OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
+                    OAuth2ClientSecret = "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",
+                    OAuth2SecretsJsonPath= "credentials.json",
+                    OAuth2RefreshToken = refreshToken,
                     LoginCustomerId = "4698070815"
                 };
                 GoogleAdsClient client = new GoogleAdsClient(config);
-  
- 
-                Run(client, Convert.ToInt64("4698070815"));
-                
 
 
-
+                Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result=   Run(client, Convert.ToInt64("4698070815"));
+                return result;
             }
             catch(Exception ex)
             {
-
-
+                return null;
             }
         }
 
 
-        public void Run(GoogleAdsClient client, long customerId)
+        public  Google.Ads.GoogleAds.V18.Services.GoogleAdsRow Run(GoogleAdsClient client, long customerId)
         {
+            Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result = new Google.Ads.GoogleAds.V18.Services.GoogleAdsRow();
             // Get the GoogleAdsService.
             Google.Ads.GoogleAds.V18.Services.GoogleAdsServiceClient googleAdsService = client.GetService(
                 Services.V18.GoogleAdsService);
@@ -118,11 +115,12 @@ namespace google_ads_api.services.Concrete
                     {
                         foreach (Google.Ads.GoogleAds.V18.Services.GoogleAdsRow googleAdsRow in resp.Results)
                         {
-                            Console.WriteLine("Campaign with ID {0} and name '{1}' was found.",
-                                googleAdsRow.Campaign.Id, googleAdsRow.Campaign.Name);
+
+                             result = googleAdsRow;
                         }
                     }
                 );
+                return result;
             }
             catch (GoogleAdsException e)
             {
