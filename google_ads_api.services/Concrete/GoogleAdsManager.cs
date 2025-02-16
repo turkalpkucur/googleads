@@ -75,62 +75,62 @@ namespace google_ads_api.services.Concrete
                     OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.SERVICE_ACCOUNT,
                     OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
                     OAuth2ClientSecret = "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",
-                    OAuth2SecretsJsonPath= "credentials.json",
+                    OAuth2SecretsJsonPath = "credentials.json",
                     OAuth2RefreshToken = refreshToken,
-                    LoginCustomerId = "4698070815"
+                    LoginCustomerId = "4698070815"  
                 };
-                GoogleAdsClient client = new GoogleAdsClient(config);
+            GoogleAdsClient client = new GoogleAdsClient(config);
 
 
-                Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result=   Run(client, Convert.ToInt64("4698070815"));
-                return result;
-            }
+            Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result = Run(client, Convert.ToInt64("4698070815"));
+            return result;
+        }
             catch(Exception ex)
             {
                 return null;
             }
-        }
+}
 
 
-        public  Google.Ads.GoogleAds.V18.Services.GoogleAdsRow Run(GoogleAdsClient client, long customerId)
-        {
-            Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result = new Google.Ads.GoogleAds.V18.Services.GoogleAdsRow();
-            // Get the GoogleAdsService.
-            Google.Ads.GoogleAds.V18.Services.GoogleAdsServiceClient googleAdsService = client.GetService(
-                Services.V18.GoogleAdsService);
+public Google.Ads.GoogleAds.V18.Services.GoogleAdsRow Run(GoogleAdsClient client, long customerId)
+{
+    Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result = new Google.Ads.GoogleAds.V18.Services.GoogleAdsRow();
+    // Get the GoogleAdsService.
+    Google.Ads.GoogleAds.V18.Services.GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V18.GoogleAdsService);
 
-            // Create a query that will retrieve all campaigns.
-            string query = @"SELECT
+    // Create a query that will retrieve all campaigns.
+    string query = @"SELECT
                     campaign.id,
                     campaign.name,
                     campaign.network_settings.target_content_network
                 FROM campaign
                 ORDER BY campaign.id";
 
-            try
+    try
+    {
+        // Issue a search request.
+        googleAdsService.SearchStream(customerId.ToString(), query,
+            delegate (Google.Ads.GoogleAds.V18.Services.SearchGoogleAdsStreamResponse resp)
             {
-                // Issue a search request.
-                googleAdsService.SearchStream(customerId.ToString(), query,
-                    delegate (Google.Ads.GoogleAds.V18.Services.SearchGoogleAdsStreamResponse resp)
-                    {
-                        foreach (Google.Ads.GoogleAds.V18.Services.GoogleAdsRow googleAdsRow in resp.Results)
-                        {
+                foreach (Google.Ads.GoogleAds.V18.Services.GoogleAdsRow googleAdsRow in resp.Results)
+                {
 
-                             result = googleAdsRow;
-                        }
-                    }
-                );
-                return result;
+                    result = googleAdsRow;
+                }
             }
-            catch (GoogleAdsException e)
-            {
-                Console.WriteLine("Failure:");
-                Console.WriteLine($"Message: {e.Message}");
-                Console.WriteLine($"Failure: {e.Failure}");
-                Console.WriteLine($"Request ID: {e.RequestId}");
-                throw;
-            }
-        }
+        );
+        return result;
+    }
+    catch (GoogleAdsException e)
+    {
+        Console.WriteLine("Failure:");
+        Console.WriteLine($"Message: {e.Message}");
+        Console.WriteLine($"Failure: {e.Failure}");
+        Console.WriteLine($"Request ID: {e.RequestId}");
+        throw;
+    }
+}
 
 
     }
