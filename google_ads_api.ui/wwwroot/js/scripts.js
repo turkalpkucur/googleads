@@ -20,15 +20,22 @@ function GetAuth() {
 
 
 function GetCustomerListButtonOnClick() {
- 
     let refreshToken = document.getElementById('ReturnRefreshTokenId').innerHTML;
- 
     $.ajax({
         type: "POST",
         data: { refreshToken: refreshToken },
         url: "/googleads/ListAvaiableCustomers",
         success: function (res) {
-            debugger;
+            $("#ResultDivId").show();
+            if (res.length > 0) {
+                $("#ResultDivId").append("<ul>");
+                for (let i = 0; i < res.length; i++) {
+                    $("#ResultDivId").append("<li>");
+                    $("#ResultDivId").append(res[i]);
+                    $("#ResultDivId").append("</li>");
+                }
+                $("#ResultDivId").append("</ul>");
+            }
         },
     });
 }

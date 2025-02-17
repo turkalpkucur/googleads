@@ -1,12 +1,12 @@
 ﻿using Google.Ads.GoogleAds;
 using Google.Ads.GoogleAds.Config;
 using Google.Ads.GoogleAds.Lib;
-using Google.Ads.GoogleAds.V17.Services;
 using Google.Ads.GoogleAds.V18.Errors;
-using Google.Ads.GoogleAds.V18.Services;
 using google_ads_api.services.Abstract;
 using google_ads_api.services.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,7 +65,7 @@ namespace google_ads_api.services.Concrete
         }
 
 
-        public async Task<Google.Ads.GoogleAds.V18.Services.GoogleAdsRow> GetCustomers(string refreshToken)
+        public async Task<List<string>> ListAvaiableCustomers(string refreshToken)
         {
             try
             {
@@ -75,14 +75,14 @@ namespace google_ads_api.services.Concrete
                     OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
                     OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
                     OAuth2ClientSecret = "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",
-                //    OAuth2SecretsJsonPath = "credentials.json",
+                    //    OAuth2SecretsJsonPath = "credentials.json",
                     OAuth2RefreshToken = refreshToken,
                     LoginCustomerId = "4698070815"
                 };
                 GoogleAdsClient client = new GoogleAdsClient(config);
 
 
-                Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result = Run(client, Convert.ToInt64("4698070815"));
+                List<string> result = GetAvaiableCustomers(client, Convert.ToInt64("4698070815"));
                 return result;
             }
             catch (Exception ex)
@@ -92,21 +92,13 @@ namespace google_ads_api.services.Concrete
         }
 
 
-        public Google.Ads.GoogleAds.V18.Services.GoogleAdsRow Run(GoogleAdsClient client, long customerId)
+        public List<string> GetAvaiableCustomers(GoogleAdsClient client, long customerId)
         {
-
+            string[] customerNames = new string[] { };
             try
             {
                 Google.Ads.GoogleAds.V18.Services.CustomerServiceClient customerService = client.GetService(Services.V18.CustomerService);
-                // Retrieve the list of customer resources.
-                string[] customerResourceNames = customerService.ListAccessibleCustomers();
-
-                // Display the result.
-                foreach (string customerResourceName in customerResourceNames)
-                {
-                    Console.WriteLine(
-                        $"Found customer with resource name = '{customerResourceName}'.");
-                }
+                customerNames = customerService.ListAccessibleCustomers();
             }
             catch (GoogleAdsException e)
             {
@@ -116,10 +108,8 @@ namespace google_ads_api.services.Concrete
                 Console.WriteLine($"Request ID: {e.RequestId}");
                 throw;
             }
-            return null;
-
+            return customerNames.ToList();
         }
-
 
     }
 }

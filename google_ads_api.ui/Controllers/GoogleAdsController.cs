@@ -1,5 +1,6 @@
 ﻿using google_ads_api.services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace google_ads_api.ui.Controllers
@@ -38,7 +39,7 @@ namespace google_ads_api.ui.Controllers
         [HttpPost]
         public async Task<IActionResult> ListAvaiableCustomers(string refreshToken)
         {
-            Google.Ads.GoogleAds.V18.Services.GoogleAdsRow result= await _googleAdsService.GetCustomers(refreshToken);
+            List<string> result= await _googleAdsService.ListAvaiableCustomers(refreshToken);
             return Ok(result);
         }
 
