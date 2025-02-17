@@ -1,7 +1,10 @@
-﻿using google_ads_api.services.Abstract;
+﻿using Google.Type;
+using google_ads_api.services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Google.Ads.GoogleAds.V18.Enums.ConsentStatusEnum.Types;
 
 namespace google_ads_api.ui.Controllers
 {
@@ -39,8 +42,21 @@ namespace google_ads_api.ui.Controllers
         [HttpPost]
         public async Task<IActionResult> ListAvaiableCustomers(string refreshToken)
         {
-            List<string> result= await _googleAdsService.ListAvaiableCustomers(refreshToken);
+            List<string> result = await _googleAdsService.ListAvaiableCustomers(refreshToken);
             return Ok(result);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadOfflineConversion(string refreshToken, string conversionValue,   long conversionActionId, string gclId, string gbraId, string wbraId)
+        {
+            ConsentStatus consentStatus = ConsentStatus.Granted;
+            
+            string conversionTime = string.Format("{0:yyyy-MM-dd hh:mm:ss}{1}",System.DateTime.UtcNow, "+02:00");
+      
+  
+            await _googleAdsService.UploadOfflineConversion(refreshToken, Convert.ToDouble(conversionValue), conversionTime, conversionActionId, consentStatus, gclId, gbraId, wbraId);
+            return Ok();
         }
 
 

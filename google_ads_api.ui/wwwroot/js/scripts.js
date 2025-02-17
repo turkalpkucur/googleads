@@ -8,7 +8,7 @@ function GetAuth() {
             try {
                 window.open(
                     res,
-                    '_blank'  
+                    '_blank'
                 );
             } catch {
                 console.log("error-->" + res);
@@ -39,5 +39,24 @@ function GetCustomerListButtonOnClick() {
         },
     });
 }
-  
+
+function UploadOfflineConversionOnClick() {
+    let conversionValue = $("#ConversionValueId").val();
  
+    let conversionActionId = $("#ConversionActionId").val();
+
+    let gclId = $("#GclId").val();
+    let gbraId = $("#GbraId").val();
+    let wbraId = $("#WbraId").val();
+    let refreshToken = document.getElementById('ReturnRefreshTokenId').innerHTML;
+
+    $.ajax({
+        type: "POST",
+        url: "/googleads/UploadOfflineConversion",
+        data: { refreshToken: refreshToken, conversionValue: conversionValue,   conversionActionId: conversionActionId, gclId: gclId, gbraId: gbraId, wbraId: wbraId  },
+        success: function () {
+            debugger;
+        }
+    });
+}
+
