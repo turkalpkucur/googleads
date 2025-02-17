@@ -50,7 +50,7 @@ namespace google_ads_api.ui.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadOfflineConversion(string refreshToken, string conversionValue,   long conversionActionId, string gclId, string gbraId, string wbraId)
         {
-            ConsentStatus consentStatus = ConsentStatus.Granted;
+            ConsentStatus consentStatus = ConsentStatus.Unknown;
             
             string conversionTime = string.Format("{0:yyyy-MM-dd hh:mm:ss}{1}",System.DateTime.UtcNow, "+02:00");
       
