@@ -72,10 +72,10 @@ namespace google_ads_api.services.Concrete
                 GoogleAdsConfig config = new GoogleAdsConfig()
                 {
                     DeveloperToken = "yQJX5fsBmfb_2fAYttQ5HA",
-                    OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.SERVICE_ACCOUNT,
+                    OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
                     OAuth2ClientId = "124948101982-v7tnt3p8icvjmrm7f37n6kine232oli3.apps.googleusercontent.com",
                     OAuth2ClientSecret = "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",
-                    OAuth2SecretsJsonPath = "credentials.json",
+              //      OAuth2SecretsJsonPath = "credentials.json",
                     OAuth2RefreshToken = refreshToken,
                     LoginCustomerId = "4698070815"  
                 };
